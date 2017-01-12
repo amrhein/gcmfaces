@@ -1,0 +1,29 @@
+function [LO,LA,FLD,X,Y]=cat_sections(lons,lats,fld,varargin);
+% DEA 7 May
+% Concatenates gcmfaces_sections
+%
+% from gcmfaces_sections:
+%
+%purpose: extract a great circle section (defined by two points) from a field
+%         or a latitude circle (defined by one latitude)
+%
+%inputs:	lons/lats are the longitude/latitude vector
+%		fld is the gcmfaces field (can incl. depth/time dimensions)
+%optional:      sortByLon to sort point by longitude (default = 0 -> sort by latgitude) 
+%outputs:	LO/LA is the vector of grid points longitude/latitude
+%		FLD is the vector/matrix of grid point values (from fld)
+
+LO = [];
+LA = [];
+FLD = [];
+X = [];
+Y = [];
+for ii = 1:length(lons)
+    [LOs,LAs,FLDs,Xs,Ys]=gcmfaces_section(lons,lats,fld,varargin);
+    LO = [LO(:);LOs(:);
+    LA = [LA(:);LAs(:);
+    FLD = [FLD(:);FLDs(:);
+    X = [X(:);Xs(:);
+    Y = [Y(:);Ys(:);
+end
+
